@@ -1,0 +1,12 @@
+server:
+  port: 8080 #?????
+
+spring:
+  application:
+    name: home-guide-api
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://117.72.35.255:3306/user_home?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
+    username: root
+    password: 12345
+
