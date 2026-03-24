@@ -1,7 +1,11 @@
 package com.guide.homeguideapi.service.impl;
 
-import com.guide.homeguideapi.dao.UserInfoDao;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
+import com.guide.homeguideapi.context.UserContext;
+import com.guide.homeguideapi.controller.vo.SetHomeReqVO;
 import com.guide.homeguideapi.entity.UserInfo;
+import com.guide.homeguideapi.mapper.UserInfoMapper;
 import com.guide.homeguideapi.service.UserInfoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -18,71 +22,23 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class UserInfoServiceImpl implements UserInfoService {
 
-    /** 用户信息 DAO */
-    private final UserInfoDao userInfoDao;
+    private final UserInfoMapper userInfoMapper;
 
     /**
-     * 保存用户信息
+     * 设置当前用户家的位置
+     * userId 从 UserContext 中获取
      *
-     * @param userInfo 用户信息实体
-     * @return 影响行数
+     * @param reqVO 家的位置信息
+     * @param userId 当前用户ID
      */
     @Override
-    public int save(UserInfo userInfo) {
-        return userInfoDao.insert(userInfo);
-    }
-
-    /**
-     * 更新用户信息
-     *
-     * @param userInfo 用户信息实体（需包含 id）
-     * @return 影响行数
-     */
-    @Override
-    public int update(UserInfo userInfo) {
-        return userInfoDao.update(userInfo);
-    }
-
-    /**
-     * 根据主键删除用户
-     *
-     * @param id 主键ID
-     * @return 影响行数
-     */
-    @Override
-    public int deleteById(Long id) {
-        return userInfoDao.deleteById(id);
-    }
-
-    /**
-     * 根据主键查询用户
-     *
-     * @param id 主键ID
-     * @return 用户信息（Optional 包装）
-     */
-    @Override
-    public Optional<UserInfo> getById(Long id) {
-        return userInfoDao.findById(id);
-    }
-
-    /**
-     * 根据微信 openid 查询用户
-     *
-     * @param openid 微信用户唯一标识
-     * @return 用户信息（Optional 包装）
-     */
-    @Override
-    public Optional<UserInfo> getByOpenid(String openid) {
-        return userInfoDao.findByOpenid(openid);
-    }
-
-    /**
-     * 查询所有用户
-     *
-     * @return 用户列表
-     */
-    @Override
-    public List<UserInfo> listAll() {
-        return userInfoDao.findAll();
+    public boolean setHomeLocation(SetHomeReqVO reqVO, Long userId) {
+        int rows = userInfoMapper.update(new LambdaUpdateWrapper<UserInfo>()
+                .eq(UserInfo::getId, userId)
+                .set(UserInfo::getHomeLatitude, reqVO.getHomeLatitude())
+                .set(UserInfo::getHomeLongitude, reqVO.getHomeLongitude())
+                .set(UserInfo::getHomeAddress, reqVO.getHomeAddress())
+        );
+        return rows > 0;
     }
 }

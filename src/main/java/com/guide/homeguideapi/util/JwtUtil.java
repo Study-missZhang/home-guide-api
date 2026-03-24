@@ -2,8 +2,6 @@ package com.guide.homeguideapi.util;
 
 import cn.hutool.jwt.JWT;
 import cn.hutool.jwt.JWTUtil;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -34,7 +32,7 @@ public class JwtUtil {
     public String generateToken(Long userId){
         Map<String, Object> payload = new HashMap<>();
         payload.put("userId", userId);
-        payload.put("exp", new Date(System.currentTimeMillis() + expire * 1000));
+        payload.put("exp", System.currentTimeMillis() / 1000 + expire);
         return JWTUtil.createToken(payload, secret.getBytes(StandardCharsets.UTF_8));
     }
 
@@ -74,7 +72,7 @@ public class JwtUtil {
         Object exp = jwt.getPayload("exp");
         if(exp == null) return true;
         // Hutool 解析出来的 exp 是 JSONObject，需要取 $numberLong 或直接转 long
-        long expTime = Long.parseLong(exp.toString().replaceAll("[^0-9]]", ""));
-        return expTime <= System.currentTimeMillis();
+        long expTime = Long.parseLong(exp.toString());
+        return expTime <= System.currentTimeMillis() / 1000;
     }
 }

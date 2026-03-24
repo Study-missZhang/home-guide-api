@@ -1,5 +1,6 @@
 package com.guide.homeguideapi.entity;
 
+import com.baomidou.mybatisplus.annotation.*;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import java.math.BigDecimal;
@@ -11,9 +12,11 @@ import java.time.LocalDateTime;
  * @author zky
  */
 @Data
+@TableName("user_info")
 @Schema(description = "用户基础信息")
 public class UserInfo {
 
+    @TableId(type = IdType.AUTO)
     @Schema(description = "主键ID", example = "1")
     private Long id;
 
@@ -32,9 +35,11 @@ public class UserInfo {
     @Schema(description = "家的文字地址描述", example = "陕西省西安市雁塔区xx街道xx号")
     private String homeAddress;
 
+    @TableField(fill = FieldFill.INSERT)
     @Schema(description = "注册时间", example = "2024-01-01T00:00:00")
     private LocalDateTime createTime;
 
+    @TableField(fill = FieldFill.INSERT_UPDATE)
     @Schema(description = "更新时间", example = "2024-01-01T00:00:00")
     private LocalDateTime updateTime;
 }
