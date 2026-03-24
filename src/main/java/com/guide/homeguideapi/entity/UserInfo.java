@@ -1,5 +1,6 @@
 package com.guide.homeguideapi.entity;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -10,29 +11,30 @@ import java.time.LocalDateTime;
  * @author zky
  */
 @Data
+@Schema(description = "用户基础信息")
 public class UserInfo {
 
-    /** 主键ID */
+    @Schema(description = "主键ID", example = "1")
     private Long id;
 
-    /** 微信用户唯一标识 */
+    @Schema(description = "微信用户唯一标识", example = "oXxxx_xxxxxxxxxxxxxxx")
     private String openid;
 
-    /** 绑定的手机号 */
+    @Schema(description = "绑定的手机号", example = "13800138000")
     private String phone;
 
-    /** 家-纬度 (如: 34.2658) */
+    @Schema(description = "家-纬度", example = "34.265800")
     private BigDecimal homeLatitude;
 
-    /** 家-经度 (如: 108.9431) */
+    @Schema(description = "家-经度", example = "108.943100")
     private BigDecimal homeLongitude;
 
-    /** 家的文字地址描述 */
+    @Schema(description = "家的文字地址描述", example = "陕西省西安市雁塔区xx街道xx号")
     private String homeAddress;
 
-    /** 注册时间 */
+    @Schema(description = "注册时间", example = "2024-01-01T00:00:00")
     private LocalDateTime createTime;
 
-    /** 更新时间 */
+    @Schema(description = "更新时间", example = "2024-01-01T00:00:00")
     private LocalDateTime updateTime;
 }
