@@ -1,5 +1,7 @@
 package com.guide.homeguideapi.service;
 
+import com.guide.homeguideapi.controller.vo.HomeLocationRespVO;
+import com.guide.homeguideapi.controller.vo.HomesickReportReqVO;
 import com.guide.homeguideapi.entity.HomesickLog;
 import java.util.List;
 import java.util.Optional;
@@ -12,4 +14,12 @@ import java.util.Optional;
 public interface HomesickLogService {
 
 
+    /**
+     * 上报想家记录
+     *
+     * @param homesickReportReqVO
+     * @param userId
+     * @return
+     */
+    Boolean report(HomesickReportReqVO homesickReportReqVO, Long userId);
 }

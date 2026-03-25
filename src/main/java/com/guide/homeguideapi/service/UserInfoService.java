@@ -1,5 +1,6 @@
 package com.guide.homeguideapi.service;
 
+import com.guide.homeguideapi.controller.vo.HomeLocationRespVO;
 import com.guide.homeguideapi.controller.vo.SetHomeReqVO;
 import com.guide.homeguideapi.entity.UserInfo;
 import java.util.List;
@@ -20,4 +21,12 @@ public interface UserInfoService {
      * @param userId 当前用户ID
      */
     boolean setHomeLocation(SetHomeReqVO reqVO, Long userId);
+
+    /**
+     * 获取家的位置
+     *
+     * @param userId
+     * @return
+     */
+    HomeLocationRespVO getHomeLocation(Long userId);
 }

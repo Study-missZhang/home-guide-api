@@ -1,12 +1,19 @@
 server:
-  port: 8080 #?????
+  port: 8080
+  error:
+    include-message: always
+    include-exception: true
+    include-binding-errors: always
 
 spring:
   application:
     name: home-guide-api
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://117.72.35.255:3306/user_home?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
-    username: root
-    password: 12345
+  profiles:
+    active: local   # 激活 local 配置文件
 
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

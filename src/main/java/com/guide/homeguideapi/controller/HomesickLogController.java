@@ -1,5 +1,8 @@
 package com.guide.homeguideapi.controller;
 
+import com.guide.homeguideapi.context.UserContext;
+import com.guide.homeguideapi.controller.vo.HomeLocationRespVO;
+import com.guide.homeguideapi.controller.vo.HomesickReportReqVO;
 import com.guide.homeguideapi.entity.HomesickLog;
 import com.guide.homeguideapi.service.HomesickLogService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -28,5 +31,20 @@ public class HomesickLogController {
 
     /** 想家记录 Service */
     private final HomesickLogService homesickLogService;
+
+    @Operation(
+            summary = "上报想家记录",
+            description = "前端计算完距离后静默上报，存储用户当前距离家的距离和想家时刻",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "上报成功",
+                            content = @Content(schema = @Schema(type = "boolean", example = "true"))),
+                    @ApiResponse(responseCode = "401", description = "未登录或 token 已过期")
+            }
+    )
+    @PostMapping("/report")
+    public ResponseEntity<Boolean> report(@RequestBody HomesickReportReqVO homesickReportReqVO){
+        Long userId = UserContext.getUserId();
+        return ResponseEntity.ok(homesickLogService.report(homesickReportReqVO, userId));
+    }
 
 }

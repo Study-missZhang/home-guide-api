@@ -3,6 +3,7 @@ package com.guide.homeguideapi.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.guide.homeguideapi.context.UserContext;
+import com.guide.homeguideapi.controller.vo.HomeLocationRespVO;
 import com.guide.homeguideapi.controller.vo.SetHomeReqVO;
 import com.guide.homeguideapi.entity.UserInfo;
 import com.guide.homeguideapi.mapper.UserInfoMapper;
@@ -40,5 +41,24 @@ public class UserInfoServiceImpl implements UserInfoService {
                 .set(UserInfo::getHomeAddress, reqVO.getHomeAddress())
         );
         return rows > 0;
+    }
+
+    /**
+     * 获取家的位置
+     *
+     * @param userId
+     * @return
+     */
+    @Override
+    public HomeLocationRespVO getHomeLocation(Long userId) {
+        UserInfo userInfo = userInfoMapper.selectById(userId);
+        if(userInfo == null) {
+            return null;
+        }
+        HomeLocationRespVO respVO = new HomeLocationRespVO();
+        respVO.setHomeLongitude(userInfo.getHomeLongitude());
+        respVO.setHomeLatitude(userInfo.getHomeLatitude());
+        respVO.setHomeAddress(userInfo.getHomeAddress());
+        return respVO;
     }
 }

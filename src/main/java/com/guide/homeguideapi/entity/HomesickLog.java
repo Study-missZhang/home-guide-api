@@ -26,7 +26,6 @@ public class HomesickLog {
     @Schema(description = "此时距离家的直线距离（公里）", example = "1024.50")
     private BigDecimal currentDistance;
 
-    @TableField(fill = FieldFill.INSERT)
     @Schema(description = "打开时间（想家时刻）", example = "2024-01-01T00:00:00")
     private LocalDateTime createTime;
 }
